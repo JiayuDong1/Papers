@@ -10,6 +10,8 @@ from .parse import split_references, normalize_text
 from .resolver import resolve_paper
 from .results import write_results, load_previous_results
 
+MAX_FILENAME_STEM_LENGTH = 120
+
 
 def run_pipeline(
     *,
@@ -106,7 +108,7 @@ def run_pipeline(
         out_pdf = None
         if resolved.pdf_url:
             pdf_base = resolved.doi or resolved.title or f"paper_{i}"
-            pdf_name = sanitize_folder_name(pdf_base)[:120] + ".pdf"
+            pdf_name = sanitize_folder_name(pdf_base)[:MAX_FILENAME_STEM_LENGTH] + ".pdf"
             out_pdf = pdf_dir / pdf_name
             print(f"[{i}/{len(refs)}] Downloading PDF...")
             result = download_pdf(

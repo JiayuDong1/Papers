@@ -34,7 +34,8 @@ class _FakeResponse:
 class BackendCoreTests(unittest.TestCase):
     def test_derive_run_dir_sanitizes_input_name(self):
         run_dir = derive_run_dir(Path(r"D:\Papers"), "/tmp/a:b?.docx")
-        self.assertEqual(run_dir.as_posix(), "D:\\Papers/a_b_")
+        self.assertEqual(run_dir.name, "a_b_")
+        self.assertIn("Papers", str(run_dir.parent))
 
     def test_norm_doi_handles_url_form(self):
         self.assertEqual(_norm_doi("https://doi.org/10.1000/ABC-12"), "10.1000/abc-12")

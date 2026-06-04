@@ -47,7 +47,7 @@ def _norm_text(s: str | None) -> str:
 
 
 def _crossref_headers() -> dict[str, str]:
-    return {"User-Agent": "oa-pdf-downloader/0.1 (mailto:unknown@example.com)"}
+    return {"User-Agent": "oa-pdf-downloader/0.1 (mailto:jiayudong1@users.noreply.github.com)"}
 
 
 def _extract_crossref_metadata(item: dict) -> ResolvedPaper:
@@ -108,6 +108,8 @@ def _looks_like_strict_match(reference: str, candidate: ResolvedPaper, reference
         return False
 
     if candidate.authors:
+        # Heuristic: Crossref author strings are usually "given family", so we match
+        # the final token (commonly family name) against the raw reference text.
         first_author_token = _norm_text(candidate.authors.split(",")[0]).split(" ")
         first_author_token = [t for t in first_author_token if t]
         if first_author_token and first_author_token[-1] not in ref:

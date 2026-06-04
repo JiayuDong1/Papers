@@ -39,8 +39,10 @@ def download_pdf(url: str, out_path: Path, *, timeout_seconds: int, retries: int
                 # Read first chunk for validation
                 it = r.iter_content(chunk_size=8192)
                 first = next(it, b"")
+                if not first:
+                    return DownloadResult(False, error="Empty response body")
                 if not _is_pdf_bytes(first):
-                    return DownloadResult(False, error=f"Not a PDF (Content-Type={ctype})")
+                    return DownloadResult(False, error=f"PDF header validation failed (Content-Type={ctype})")
 
                 with open(out_path, 'wb') as f:
                     f.write(first)
