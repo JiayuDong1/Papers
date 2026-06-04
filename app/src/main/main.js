@@ -6,6 +6,13 @@ const { spawn } = require('child_process');
 let mainWindow;
 let backendProc;
 
+function getBackendCwd() {
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, 'backend');
+  }
+  return path.join(__dirname, '../../../backend');
+}
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1100,
@@ -70,7 +77,7 @@ ipcMain.handle('start-backend-job', async (_event, job) => {
   log.info('Starting backend:', backendExe, args.join(' '));
 
   backendProc = spawn(backendExe, args, {
-    cwd: path.join(__dirname, '../../../backend'),
+    cwd: getBackendCwd(),
     windowsHide: true,
   });
 

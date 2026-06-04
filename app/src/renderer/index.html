@@ -10,6 +10,8 @@
     input[type=text] { width: 520px; }
     #log { white-space: pre-wrap; background: #111; color: #eee; padding: 12px; height: 260px; overflow: auto; border-radius: 8px; }
     .btn { padding: 8px 12px; }
+    #progressText { margin-left: 8px; color: #555; }
+    progress { width: 340px; height: 16px; vertical-align: middle; }
   </style>
 </head>
 <body>
@@ -42,6 +44,10 @@
   <div class="row">
     <button class="btn" id="btnStart">Start</button>
     <span id="status"></span>
+  </div>
+  <div class="row">
+    <progress id="progressBar" max="1" value="0"></progress>
+    <span id="progressText"></span>
   </div>
 
   <h3>Logs</h3>

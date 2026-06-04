@@ -3,11 +3,15 @@
   "private": true,
   "version": "0.1.0",
   "description": "Electron UI for OA PDF downloader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JiayuDong1/Papers.git"
+  },
   "main": "src/main/main.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
+    "pack": "electron-builder --dir --publish never",
+    "dist": "electron-builder --publish never",
     "lint": "echo \"(placeholder)\""
   },
   "devDependencies": {
@@ -28,6 +32,19 @@
     "directories": {
       "output": "dist"
     },
+    "extraResources": [
+      {
+        "from": "../backend",
+        "to": "backend",
+        "filter": [
+          "**/*",
+          "!.venv{,/**}",
+          "!dist{,/**}",
+          "!__pycache__{,/**}",
+          "!*.pyc"
+        ]
+      }
+    ],
     "win": {
       "target": [
         {

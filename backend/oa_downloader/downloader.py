@@ -32,7 +32,8 @@ def download_pdf(url: str, out_path: Path, *, timeout_seconds: int, retries: int
                 r.raise_for_status()
 
                 ctype = (r.headers.get('Content-Type') or '').lower()
-                # We'll still allow if content-type is missing, but we validate magic header below.
+                if "pdf" not in ctype:
+                    return DownloadResult(False, error=f"Not a PDF content-type (Content-Type={ctype or 'missing'})")
 
                 out_path.parent.mkdir(parents=True, exist_ok=True)
                 # Read first chunk for validation
